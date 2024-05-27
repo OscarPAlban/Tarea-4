@@ -1,0 +1,36 @@
+def bisection_method(f, a, b, tol, max_iter):
+    """
+    Método de la bisección para encontrar la raíz de una función.
+    
+    :param f: Función de la que se busca la raíz.
+    :param a: Extremo izquierdo del intervalo.
+    :param b: Extremo derecho del intervalo.
+    :param tol: Tolerancia, el algoritmo se detendrá cuando |f(c)| sea menor que esta tolerancia.
+    :param max_iter: Número máximo de iteraciones permitidas.
+    :return: Aproximación de la raíz encontrada, o None si no se cumple la condición de parada.
+    """
+    if f(a) * f(b) >= 0:
+        print("El método de la bisección no garantiza convergencia en este intervalo.")
+        return None
+    
+    iter_count = 0
+    while iter_count < max_iter:
+        c = (a + b) / 2
+        if abs(f(c)) < tol:
+            return c
+        if f(c) * f(a) < 0:
+            b = c
+        else:
+            a = c
+        iter_count += 1
+
+    print("Se alcanzó el número máximo de iteraciones sin convergencia.")
+    return None
+
+# Ejemplo de uso:
+def f(x):
+    return x**3 - 2*x - 5
+
+root = bisection_method(f, 1, 3, 1e-6, 100)
+if root is not None:
+    print("Aproximación de la raíz:", root)
